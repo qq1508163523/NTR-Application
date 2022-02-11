@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ntr.mapper.BranchMapper">
+
+    <cache eviction="FIFO" flushInterval="86400000" size="1024" readOnly="true"/>
+
+    <select id="selectDailyRecommend" resultType="com.ntr.entity.Branch">
+        SELECT
+            `branch_id`,
+            `translated_name`,
+            `status`,
+            `img_name`,
+            `folder_location`
+        FROM branch
+        WHERE `release_date` BETWEEN '2011-01-01' AND NOW()
+               AND `locked` = 0
+               AND `status` = '完结'
+        ORDER BY RAND() LIMIT 12
+    </select>
+
+    <select id="selectRecentUpdate" resultType="com.ntr.entity.Branch">
+        SELECT
+            `branch_id`,
+            `translated_name`,
+            `status`,
+            `img_name`,
+            `folder_location`
+        FROM branch
+        WHERE `status` = '连载'
+              AND `locked` = 0
+        ORDER BY `update_time` DESC LIMIT 12
+    </select>
+
+    <select id="selectByWeekday" resultType="com.ntr.entity.Branch">
+        SELECT
+            `branch_id`,
+            `translated_name`,
+            `status`,
+            `img_name`,
+            `folder_location`
+        FROM branch
+        WHERE DAYOFWEEK(`release_date`) = #{weekday}
+              and `status` = '连载'
+              and `locked` = 0
+    </select>
+
+    <select id="selectSimilarRecommendByBranchId" resultType="com.ntr.entity.Branch">
+        SELECT
+            DISTINCT (b.`branch_id`),
+            b.`translated_name`,
+            b.`status`,
+            b.`img_name`,
+            b.`folder_location`,
+            b.`release_date`
+        FROM `branch` b INNER JOIN `branch_genre_assoc` bga
+        ON b.`branch_id` = bga.`branch_id` AND b.`branch_id` != #{branchId} AND b.`locked` = 0
+                       INNER JOIN (SELECT
+                                         bga2.`genre_name`
+                                   FROM `branch` b2 INNER JOIN `branch_genre_assoc` bga2
+                                   ON b2.`branch_id` = bga2.`branch_id` AND b2.`branch_id` = #{branchId} AND b2.`locked` = 0) t
+        ON bga.`genre_name` = t.`genre_name`
+        ORDER BY RAND() LIMIT 12
+    </select>
+
+</mapper>

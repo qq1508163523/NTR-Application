@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ntr.mapper.CollectionMapper">
+
+    <select id="selectCollectionByUsername" resultMap="collectionBranch">
+        SELECT
+               c.`username`,
+               c.`branch_id`,
+               c.`collect_time`,
+               b.`branch_id`,
+               b.`translated_name`,
+               b.`status`,
+               b.`img_name`,
+               b.`folder_location`
+        FROM collection c INNER JOIN branch b
+        ON c.`branch_id` = b.`branch_id` AND c.`username` = #{username}
+        ORDER BY c.`collect_time` DESC
+    </select>
+
+    <resultMap id="collectionBranch" type="com.ntr.entity.Collection">
+        <result property="username" column="username"/>
+        <result property="branchId" column="branch_id"/>
+        <result property="collectTime" column="collect_time"/>
+        <association property="branch" javaType="com.ntr.entity.Branch">
+            <result property="branchId" column="branch_id"/>
+            <result property="translatedName" column="translated_name"/>
+            <result property="status" column="status"/>
+            <result property="imgName" column="img_name"/>
+            <result property="folderLocation" column="folder_location"/>
+        </association>
+    </resultMap>
+
+</mapper>

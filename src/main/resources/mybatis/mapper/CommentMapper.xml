@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ntr.mapper.CommentMapper">
+    <select id="selectCommentByBranchId" resultMap="commentAccountMap">
+        SELECT * from comment
+        WHERE branch_id = #{branchId} and parent = -1
+        ORDER BY post_time DESC
+    </select>
+
+    <select id="selectCommentByParent" resultMap="commentAccountMap">
+        SELECT * from comment
+        WHERE parent = #{parent}
+        ORDER BY post_time
+    </select>
+
+    <select id="selectCommentByUsername" resultMap="commentAccountMap2">
+        SELECT * from comment
+        WHERE username = #{username}
+        ORDER BY post_time DESC
+    </select>
+
+    <resultMap id="commentAccountMap" type="com.ntr.entity.Comment">
+        <result property="commentId" column="comment_id"/>
+        <result property="username" column="username"/>
+        <result property="branchId" column="branch_id"/>
+        <result property="content" column="content"/>
+        <result property="parent" column="parent"/>
+        <result property="replyTo" column="reply_to"/>
+        <result property="postTime" column="post_time"/>
+        <association property="account" column="username" javaType="com.ntr.entity.Account" select="getAccountByUsername"/>
+    </resultMap>
+
+    <resultMap id="commentAccountMap2" type="com.ntr.entity.Comment">
+        <result property="commentId" column="comment_id"/>
+        <result property="username" column="username"/>
+        <result property="branchId" column="branch_id"/>
+        <result property="content" column="content"/>
+        <result property="parent" column="parent"/>
+        <result property="replyTo" column="reply_to"/>
+        <result property="postTime" column="post_time"/>
+        <association property="account" column="username" javaType="com.ntr.entity.Account" select="getAccountByUsername"/>
+        <association property="branch" column="branch_id" javaType="com.ntr.entity.Branch" select="getBranchByBranchId"/>
+    </resultMap>
+
+    <select id="getAccountByUsername" resultType="com.ntr.entity.Account">
+        SELECT `username`,`role`,`nickname`,`profile_pic_name`
+        FROM account WHERE `username` = #{username}
+    </select>
+
+    <select id="getBranchByBranchId" resultType="com.ntr.entity.Branch">
+        SELECT
+            `branch_id`,
+            `translated_name`
+        FROM branch WHERE `branch_id` = #{branchId}
+    </select>
+
+</mapper>
