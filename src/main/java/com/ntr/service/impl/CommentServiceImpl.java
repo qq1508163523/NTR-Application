@@ -34,7 +34,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Override
     public Comment insertComment(Comment comment) {
         if(baseMapper.insert(comment) <= 0){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
         comment = baseMapper.selectById(comment.getCommentId());
         comment.setAccount(accountService.getAccountByUsernameForComment(comment.getUsername()));

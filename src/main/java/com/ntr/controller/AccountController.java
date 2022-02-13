@@ -44,13 +44,13 @@ public class AccountController {
 
     @PostMapping(value="code/{email}")
     @ApiOperation("Send verification code")
-    public CommonResult<String> sendVerificationCode(@PathVariable("email") @Email(message = "Email格式不正确") String email){
+    public CommonResult<String> sendVerificationCode(@PathVariable("email") @Email(message = "Email format invalid") String email){
         return CommonResult.success(accountService.emailVerify(email));
     }
 
     @PostMapping(value="verify")
     @ApiOperation("Verify the code")
-    public CommonResult<String> verifyCode(@RequestParam("email") @Email(message = "Email格式不正确") String email,
+    public CommonResult<String> verifyCode(@RequestParam("email") @Email(message = "Email format invalid") String email,
                                            @RequestParam("verificationCode") String verificationCode){
         return CommonResult.success(accountService.verifyCode(email,verificationCode));
     }

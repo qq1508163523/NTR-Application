@@ -34,15 +34,13 @@ public class Account implements Serializable {
     private static final long serialVersionUID = 10086L;
 
     @TableId(value = "username", type = IdType.INPUT)
-    @Pattern(regexp = "[a-z0-9A-Z]{6,20}", message = "账号必须为6~20个字母和数字组合")
-    @NotNull(message = "用户名不能为空")
+    @Pattern(regexp = "[a-z0-9A-Z]{6,20}", message = "The length of username must be between 6 and 20")
     private String username;
 
-    @Email(message = "email格式不正确")
+    @Email(message = "Email format invalid")
     private String email;
 
-    @Pattern(regexp = "[a-z0-9A-Z!@#$%^&*()]{6,20}", message = "密码必须为6~20个字母和数字和特殊符号组合")
-    @NotNull(message = "密码不能为空")
+    @Pattern(regexp = "[a-z0-9A-Z!@#$%^&*()]{6,20}", message = "The length of password must be between 6 and 20")
     private String password;
 
     private String role;

@@ -48,7 +48,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
     @Override
     public String insertCollection(String username,Integer branchId) {
         if(baseMapper.insert(new Collection(username,branchId)) <= 0){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
         return "OK";
     }
@@ -58,7 +58,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         LambdaQueryWrapper<Collection> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Collection::getUsername,username).eq(Collection::getBranchId,branchId);
         if(baseMapper.delete(lambdaQueryWrapper) <= 0){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
         return "OK";
     }
@@ -70,7 +70,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
             map.put("username",username);
             map.put("branch_id",x);
             if(this.baseMapper.deleteByMap(map) <= 0){
-                throw new CommonException("SERVER错误");
+                throw new CommonException("SERVER ERROR");
             }
         });
         return "OK";

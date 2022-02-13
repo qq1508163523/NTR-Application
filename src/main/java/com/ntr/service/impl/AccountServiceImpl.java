@@ -54,12 +54,12 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         LambdaQueryWrapper<Account> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Account::getEmail,email);
         if(baseMapper.selectOne(lambdaQueryWrapper) != null){
-            throw new CommonException("该邮箱已被注册");
+            throw new CommonException("The email had been registered");
         }
 
         String verificationCode = CommonUtil.generateVerificationCode();
         if(redisUtil.hasKey("NTR:VERIFY_TIMEOUT:"+email)){
-            throw new CommonException("请稍后再试");
+            throw new CommonException("Try later");
         }
 
         if(redisUtil.hasKey("NTR:VERIFY:"+email)){
@@ -83,7 +83,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
             return "OK";
         }else{
             // verification doesn't match, throw an exception
-            throw new CommonException("验证码不匹配");
+            throw new CommonException("Verification code doesn't match");
         }
     }
 
@@ -91,7 +91,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public String registerAccount(Account account) {
         if(redisUtil.hasKey("NTR:REGISTER_SESSION:"+account.getEmail())){
             if(baseMapper.selectById(account.getUsername()) != null){
-                throw new CommonException("该账号已被注册");
+                throw new CommonException("This username had been registered");
             }
             account.setPassword(encoder.encode(account.getPassword()));
             account.setRole("USER");
@@ -103,9 +103,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
                 redisUtil.delete("NTR:REGISTER_SESSION:"+account.getEmail());
                 return "OK";
             }
-            else throw new CommonException("SERVER错误");
+            else throw new CommonException("SERVER ERROR");
         }else{
-            throw new CommonException("注册会话到期，创建失败");
+            throw new CommonException("Registration session expired");
         }
     }
 
@@ -115,7 +115,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         account.setUsername(username);
         account.setNickname(nickname);
         if(baseMapper.updateById(account) <= 0){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
         return "OK";
     }
@@ -124,11 +124,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public String modifyPassword(String username, String oldPassword, String newPassword) {
         Account account = baseMapper.selectById(username);
         if(!encoder.matches(oldPassword,account.getPassword())){
-            throw new CommonException("旧密码错误,更改密码失败");
+            throw new CommonException("Old password doesn't match");
         }
         account.setPassword(encoder.encode(newPassword));
         if(baseMapper.updateById(account) <= 0){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
         return "OK";
     }
@@ -145,7 +145,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         String path = Resource.IMG_PATH.getRoot()+"userProfiles\\"+imageName+"."+imageType;
         IOUtil.createImageFromBase64(imageData,path);
         if(this.baseMapper.updateById(account) <= 0){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
         return this.getAccountByUsername(username);
     }

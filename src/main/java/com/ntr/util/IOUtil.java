@@ -35,7 +35,7 @@ public class IOUtil {
             outputStream.flush();
             outputStream.close();
         }catch (IOException e){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
     }
 }

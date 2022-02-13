@@ -23,7 +23,7 @@ public class RedisUtil {
         try {
             redisTemplate.opsForValue().set(key, value);
         } catch (Exception e) {
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
     }
 
@@ -36,7 +36,7 @@ public class RedisUtil {
         try{
             redisTemplate.opsForValue().setIfPresent(key,value,second, TimeUnit.SECONDS);
         }catch(Exception e){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
     }
 
@@ -44,7 +44,7 @@ public class RedisUtil {
         try{
             redisTemplate.opsForValue().setIfAbsent(key,value,second, TimeUnit.SECONDS);
         }catch(Exception e){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
     }
 
@@ -52,7 +52,7 @@ public class RedisUtil {
         try{
             redisTemplate.delete(key);
         }catch(Exception e){
-            throw new CommonException("SERVER错误");
+            throw new CommonException("SERVER ERROR");
         }
     }
 }

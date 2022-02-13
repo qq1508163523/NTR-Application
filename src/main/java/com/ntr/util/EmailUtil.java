@@ -17,8 +17,8 @@ public class EmailUtil {
     public void sendVerificationCode(String to,String verificationCode){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(to);
-        simpleMailMessage.setSubject("NTR注册验证");
-        simpleMailMessage.setText("你好， 你的注册验证码是"+verificationCode);
+        simpleMailMessage.setSubject("NTR registration code");
+        simpleMailMessage.setText("Hi, your verification code is "+verificationCode);
         mailSender.send(simpleMailMessage);
     }
 }
