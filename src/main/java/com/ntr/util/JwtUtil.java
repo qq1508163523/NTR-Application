@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class JwtUtil {
 
-    private static final String SIGNATURE = "!EASYGIRLGODEATH&&GETOUTOFMYCOUNTRY!";
+    private static final String SIGNATURE = "ThisIsAseCretsIgnature:)YoudoN'tkNoW";
 
     // day
     private static final Integer TOKEN_LIFE_DURATION = 3;
