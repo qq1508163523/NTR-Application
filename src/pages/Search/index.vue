@@ -1,40 +1,26 @@
 <template>
-  <div class="search-container">
+  <div class="search-container container">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>"{{this.keyword}}"</el-breadcrumb-item>
+      <el-breadcrumb-item>"{{keyword}}"</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="search-content-container">
-      <div v-show="searchResult.dataList.length > 0">
-        <div style="padding: 1rem 0">
-          <Pagination :pageSize="24" :total="searchResult.total" :reqPage="reqPage"/>
-        </div>
-        <div style="margin-top: 1rem">
-          <div>
-            <span style="font-weight: bold;font-size: 1rem">共{{searchResult.total}}个结果</span>
-          </div>
-          <div>
-            <ItemDisplay :itemList="searchResult.dataList" :limitSize="24" :colSize="6" :gutter="12"/>
-          </div>
-        </div>
-      </div>
-      <el-empty v-show="searchResult.dataList.length === 0" description="无搜索结果" :image-size="200"></el-empty>
+      <Result :reqPage="reqPage" :result="searchResult"/>
     </div>
   </div>
 </template>
 
 <script>
 
-import Pagination from "@/components/Pagination";
-import ItemDisplay from "@/components/ItemDisplay";
+import Result from "@/components/Result";
+
 import {mapState} from "vuex";
 
 export default {
   name: "Search",
   props: ['keyword'],
   components: {
-    Pagination,
-    ItemDisplay
+    Result
   },
   methods: {
     load(){
@@ -67,13 +53,11 @@ export default {
 <style lang="scss" scoped>
 
 .search-container{
-  width: 1140px;
-  min-width: 1140px;
-  margin: 1.5rem auto 0 auto;
+  margin-top: 1.5rem;
   > .search-content-container{
     margin-top: 0.5rem;
     padding: 0.35rem;
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     box-shadow: 2px 2px 2px #c9c6c6;
     background-color: #ffffff;
   }

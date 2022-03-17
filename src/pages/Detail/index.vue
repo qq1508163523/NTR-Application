@@ -1,12 +1,12 @@
 <template>
-  <div class="detail-container">
+  <div class="detail-container container">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>{{branch.translatedName}}</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="el-row detail-content-container">
-      <div class="el-col-17 right-container">
-        <div class="right-up-container">
+    <div class="el-row">
+      <div class="el-col-xs-24 el-col-lg-18">
+        <div class="left-up-container">
           <Intro :branch="branch" />
           <Playlist :episodeList="episodeList" :branchId="branchId" :currentEpisode="-99"/>
           <div class="intro-container">
@@ -18,13 +18,16 @@
             </div>
           </div>
           <Relate :relateList="relateList"/>
+          <div class="hidden-lg-and-up">
+            <SimilarRecommendHorizontal :similarRecommendList="similarRecommendList"/>
+          </div>
         </div>
-        <div class="right-down-container">
+        <div class="left-down-container">
           <Comment :commentRoot="commentRoot" :branchId="branchId" :loadComment="loadComment"/>
         </div>
       </div>
-      <div class="el-col-6 left-container">
-        <SimilarRecommend :similarRecommendList="similarRecommendList" :limitSize="10"/>
+      <div class="el-col-lg-6 hidden-md-and-down">
+        <SimilarRecommendVertical :similarRecommendList="similarRecommendList" :limitSize="10"/>
       </div>
     </div>
   </div>
@@ -35,19 +38,23 @@
 import {mapState,mapActions} from 'vuex';
 
 import Intro from "@/components/Intro";
-import SimilarRecommend from "@/components/SimilarRecommend";
+import SimilarRecommendVertical from "@/components/SimilarRecommendVertical";
+import SimilarRecommendHorizontal from "@/components/SimilarRecommendHorizontal";
 import Playlist from "@/components/Playlist";
 import Relate from "@/components/Relate";
 import Comment from "@/components/Comment";
+import BranchItem from "@/components/BranchItem";
 
 export default {
   name: "index",
   props: ["branchId"],
   components:{
     Intro,
-    SimilarRecommend,
+    SimilarRecommendVertical,
+    SimilarRecommendHorizontal,
     Playlist,
     Relate,
+    BranchItem,
     Comment
   },
   computed:{
@@ -89,22 +96,18 @@ export default {
 <style lang="scss" scoped>
 
 .detail-container{
-  width: 1140px;
-  min-width: 1140px;
   margin: 1.5rem auto 0 auto;
-  > * {
-    margin: 1rem 0;
-  }
-  > .detail-content-container{
-    > .right-container{
-      padding-right: 0.5rem;
+  > .el-row{
+    margin-top: 0.5rem;
+    > div:first-child{
+      padding-right: 0.75rem;
       > * {
         padding: 0.35rem;
         border-radius: 5px;
         box-shadow: 2px 2px 2px #c9c6c6;
         background-color: #ffffff;
       }
-      > .right-up-container{
+      > .left-up-container{
         > .intro-container{
           border-bottom: 1px solid #b6b2b2;
           border-top: 1px solid #b6b2b2;
@@ -114,13 +117,12 @@ export default {
           margin-bottom: 1.5rem;
         }
       }
-      > .right-down-container{
-        margin-top: 1.5rem;
+      > .left-down-container{
+        margin-top: 1.25rem;
       }
     }
-    > .left-container{
-      margin-left: 1.25rem;
-      padding: 0.35rem;
+    > div:last-child{
+      padding: 0.5rem;
       border-radius: 5px;
       box-shadow: 2px 2px 2px #c9c6c6;
       background-color: #ffffff;
@@ -128,5 +130,15 @@ export default {
   }
 }
 
+
+@media screen and(max-width: 992px) {
+  .detail-container {
+    > .el-row {
+      > div:first-child {
+        padding-right: 0;
+      }
+    }
+  }
+}
 
 </style>

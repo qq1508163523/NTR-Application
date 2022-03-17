@@ -1,12 +1,12 @@
 <template>
   <div class="info-container">
-    <el-row>
-      <el-col :span="3">
+    <div class="el-row">
+      <div class="el-col-xs-5 el-col-sm-6 el-col-md-5 el-col-lg-4">
         <span>昵称: </span>
-      </el-col>
-      <el-col :span="8">
+      </div>
+      <div class="el-col-xs-18 el-col-sm-17 el-col-md-18 el-col-lg-19">
         <el-popover
-            placement="right-end"
+            placement="bottom-end"
             title="错误"
             width="200"
             trigger="manual"
@@ -14,34 +14,34 @@
             v-model="visible">
           <el-input slot="reference" size="small" v-model.trim="nickname" @focus="visible=false"></el-input>
         </el-popover>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="3">
+      </div>
+    </div>
+    <div class="el-row">
+      <div class="el-col-xs-5 el-col-sm-6 el-col-md-5 el-col-lg-4">
         <span>用户名: </span>
-      </el-col>
-      <el-col :span="8">
+      </div>
+      <div class="el-col-xs-18 el-col-sm-17 el-col-md-18 el-col-lg-19">
         <el-input disabled size="small" :value="account.username"></el-input>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="3">
+      </div>
+    </div>
+    <div class="el-row">
+      <el-col class="el-col-xs-5 el-col-sm-6 el-col-md-5 el-col-lg-4">
         <span>邮箱: </span>
       </el-col>
-      <el-col :span="8">
+      <el-col class="el-col-xs-18 el-col-sm-17 el-col-md-18 el-col-lg-19">
         <el-input disabled size="small" :value="account.email"></el-input>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="3">
+    </div>
+    <div class="el-row">
+      <div class="el-col-xs-5 el-col-sm-6 el-col-md-5 el-col-lg-4">
         <span>加入时间: </span>
-      </el-col>
-      <el-col :span="8">
+      </div>
+      <div class="el-col-xs-18 el-col-sm-17 el-col-md-18 el-col-lg-19">
         <el-input disabled size="small" :value="account.createTime | dateFormatter"></el-input>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
     <el-divider></el-divider>
-    <div style="text-align: center">
+    <div style="text-align: center;margin-bottom: 1.25rem">
       <el-button type="primary" @click="sendUpdate">保存</el-button>
     </div>
   </div>

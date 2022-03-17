@@ -5,7 +5,7 @@
     </div>
     <el-row>
       <el-col :span="11" :push="1">
-        <el-form :model="securityForm" label-position="right" ref="securityFormRef" status-icon :rules="securityFormRules" label-width="100px">
+        <el-form :model="securityForm" label-position="right" ref="securityFormRef" status-icon :rules="securityFormRules">
           <el-form-item prop="oldPassword" label="旧密码:">
             <el-input
                 :maxlength="20"

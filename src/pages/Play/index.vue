@@ -1,5 +1,5 @@
 <template>
-  <div class="play-container">
+  <div class="play-container container">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ name: 'detail',params:{branchId}}">{{branch.translatedName}}</el-breadcrumb-item>
@@ -18,12 +18,7 @@
           </div>
         </div>
         <Relate :relateList="relateList"/>
-        <div class="similar-container">
-          <div class="icon-title">
-            <span style="font-size: 1.25rem">相关推荐</span>
-          </div>
-          <ItemDisplay :itemList="similarRecommendList" :limitSize="12" :colSize="6" :gutter="12"/>
-        </div>
+        <SimilarRecommendHorizontal :similarRecommendList="similarRecommendList"/>
       </div>
       <div class="down-container">
         <Comment :commentRoot="commentRoot" :branchId="branchId" :loadComment="loadComment"/>
@@ -40,7 +35,7 @@ import Playlist from "@/components/Playlist";
 import DPlayer from "dplayer";
 import Relate from "@/components/Relate";
 import Comment from "@/components/Comment";
-import ItemDisplay from "@/components/ItemDisplay";
+import SimilarRecommendHorizontal from "@/components/SimilarRecommendHorizontal";
 
 export default {
   name: "Play",
@@ -49,8 +44,8 @@ export default {
     Player,
     Playlist,
     Relate,
-    ItemDisplay,
-    Comment
+    Comment,
+    SimilarRecommendHorizontal
   },
   computed:{
     ...mapState('branchInfo',['branch','similarRecommendList','relateList','episodeList','episode','commentRoot'])
@@ -104,14 +99,12 @@ export default {
 <style lang="scss" scoped>
 
 .play-container{
-  width: 1140px;
-  min-width: 1140px;
-  margin: 1rem auto 0 auto;
+  margin-top: 1.5rem;
   > .play-content-container{
     margin-top: 0.75rem;
     > * {
       margin-bottom: 1.25rem;
-      border-radius: 5px;
+      border-radius: 0.3125rem;
       box-shadow: 2px 2px 2px #c9c6c6;
       padding: 0.75rem;
       background-color: white;

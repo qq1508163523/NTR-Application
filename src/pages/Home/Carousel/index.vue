@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-carousel :interval="4000" type="card" trigger="click" height="352px">
+  <div class="hidden-md-and-down">
+    <el-carousel :interval="3500" type="card" trigger="click" height="352px">
       <el-carousel-item v-for="(carousel,index) in $store.state.home.carouselList" :key="index">
         <img @click="goDetail(carousel.branchId)" :src="carousel.imgUrl" :alt="carousel.translatedName">
       </el-carousel-item>

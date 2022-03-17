@@ -2,7 +2,7 @@
   <div class="comment-edit-container">
     <div class="user-icon">
         <span>
-          <img src="../../assets/img/default-user-icon.jpg" alt="default-user">
+          <img :src="$store.state.account.account.profilePicUrl" alt="user-icon">
         </span>
     </div>
     <div class="comment-board">

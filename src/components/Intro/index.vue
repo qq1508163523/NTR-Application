@@ -1,60 +1,53 @@
 <template>
-  <el-row type="flex">
-    <el-col :span="8" class="left-container">
-      <img :src="branch.imgUrl" alt="branch.translatedName">
-    </el-col>
-    <el-col :span="16" class="right-container">
+  <div class="el-row intro">
+    <div class="el-col-xs-9 el-col-sm-6 el-col-md-6 el-col-lg-8">
+      <img class="img-fluid" v-lazy="branch.imgUrl" :alt="branch.translatedName">
+    </div>
+    <div class="el-col-xs-15 el-col-sm-18 el-col-md-18 el-col-lg-16">
       <div class="info-container">
-        <span>{{branch.translatedName}}</span>
-        <el-row>
-          <el-col :span="4"><p>原名:</p></el-col>
-          <el-col :span="20"><p>{{branch.originalName}}</p></el-col>
-        </el-row>
-<!--        <el-row v-if="branch.nicknameList !== null">-->
-<!--          <el-col :span="4"><p>别名:</p></el-col>-->
-<!--          <el-col :span="20">-->
-<!--            <p v-for="nickname in nicknameList" :key="nickname.nicknameId">-->
-<!--              {{nickname.nickname}}-->
-<!--            </p>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
-        <el-row>
-          <el-col :span="4"><p>首播时间:</p></el-col>
-          <el-col :span="20"><p>{{branch.releaseDate | dateFormatter}}</p></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="4"><p>年份:</p></el-col>
-          <el-col :span="20"><p>{{branch.releaseDate | dateFormatter('yyyy')}}年</p></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="4"><p>季度:</p></el-col>
-          <el-col :span="20"><p>{{branch.releaseDate | dateFormatter('m')}}月</p></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="4"><p>状态:</p></el-col>
-          <el-col :span="20"><p>{{branch.status}}</p></el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="4"><p>类型:</p></el-col>
-          <el-col :span="20">
+        <div class="title one-line-ellipsis">
+          <span>{{branch.translatedName}}</span>
+        </div>
+        <div class="el-row">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>原名:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20"><span>{{branch.originalName}}</span></div>
+        </div>
+        <div class="el-row">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>首播时间:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20"><span>{{branch.releaseDate | dateFormatter}}</span></div>
+        </div>
+        <div class="el-row">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>年份:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20"><span>{{branch.releaseDate | dateFormatter('yyyy')}}年</span></div>
+        </div>
+        <div class="el-row hidden-xs-only">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>季度:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20"><span>{{branch.releaseDate | dateFormatter('m')}}月</span></div>
+        </div>
+        <div class="el-row">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>状态:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20"><span>{{branch.status}}</span></div>
+        </div>
+        <div class="el-row">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>类型:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20">
             <span v-for="genre in branch.genreList" :key="genre.genreName">
               {{genre.genreName}}
             </span>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="4"><p>地区:</p></el-col>
-          <el-col :span="20"><p>{{branch.region}}</p></el-col>
-        </el-row>
+          </div>
+        </div>
+        <div class="el-row">
+          <div class="el-col-xs-7 el-col-sm-6 el-col-md-5 el-col-lg-4"><span>地区:</span></div>
+          <div class="el-col-xs-17 el-col-sm-18 el-col-md-19 el-col-lg-20"><span>{{branch.region}}</span></div>
+        </div>
       </div>
       <div style="position: absolute;bottom: 0">
-        <el-button size="small" type="primary" @click="doAction" :loading="showBtnLoading">
-<!--          {{$store.state.branchInfo.isCollected?'取消收藏':'点击收藏'}}-->
+        <el-button size="mini" type="primary" @click="doAction" :loading="showBtnLoading">
           {{getBtnText}}
         </el-button>
       </div>
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -109,24 +102,34 @@ export default {
 
 <style lang="scss" scoped>
 
-.info-container{
-  > span{
-    font-size: 1.25rem;
-    font-weight: bold;
+.intro{
+  display: flex;
+  > div:last-child{
+    padding-left: 0.25rem;
   }
-  > .el-row{
-    font-size: 0.9rem;
-    > :nth-child(1){
-      font-weight: bold;
+  .info-container{
+    > .title{
+      > span{
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    }
+    > div{
+      font-size: 0.9rem;
+      > div:first-child{
+        font-weight: bold;
+      }
+      > div:last-child{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    > * {
+      margin-bottom: 0.5rem;
     }
   }
-  > * {
-    margin: 0.5rem 0;
-  }
-}
-
-.right-container{
-  position: relative;
 }
 
 </style>

@@ -1,73 +1,79 @@
 <template>
   <div class="collection-container">
-    <div class="top-container">
-      <el-row v-show="!multiSelectMode">
-        <el-col class="operation" :span="18">
+    <template v-if="collection.dataList.length">
+      <div class="top-container">
+        <div style="text-align: right" v-show="!multiSelectMode">
           <el-link :underline="false" @click.native.prevent="multiSelectMode=true">批量操作</el-link>
-        </el-col>
-        <el-col class="collection-search" :span="5" :push="1">
-          <el-input
-              placeholder="请输入内容"
-              size="small"
-              clearable>
-          </el-input>
-        </el-col>
-      </el-row>
-      <div class="multi-mode-container" v-show="multiSelectMode">
-        <div class="multi-mode-top">
-          <el-button @click="multiSelectMode=false" size="mini" >返回</el-button>
+          <div style="display: inline-block;margin-left: 1.25rem">
+            <el-input
+                placeholder="请输入关键词"
+                size="small"
+                v-model="keyword"
+                @keyup.enter.native="load(1)"
+                clearable>
+            </el-input>
+          </div>
         </div>
-        <div class="multi-mode-bottom" style="margin-top: 1rem;">
-          <el-checkbox v-model="selectAll" label="全选"></el-checkbox>
-          <el-link type="danger" :underline="false" @click.native.prevent="deleteBulk" :disabled="deleteDisabled">删除选定</el-link>
+        <div class="multi-mode-container" v-show="multiSelectMode">
+          <div class="multi-mode-top">
+            <el-button @click="multiSelectMode=false" size="mini" >返回</el-button>
+          </div>
+          <div class="multi-mode-bottom" style="margin-top: 1rem;">
+            <el-checkbox v-model="selectAll" label="全选"></el-checkbox>
+            <el-link type="danger" :underline="false" @click.native.prevent="deleteBulk" :disabled="deleteDisabled">删除选定</el-link>
+          </div>
         </div>
       </div>
-    </div>
-    <el-divider></el-divider>
-    <div class="bottom-container">
-      <el-row :gutter="12">
-        <el-col class="item-container" :span="4" v-for="(item,index) in collection.dataList" :key="item.branch.branchId">
-          <div class="cover">
-            <img @click="goDetail(item.branch.branchId,index)"
-                 :src="item.branch.imgUrl"
-                 :alt="item.branch.translatedName"
-            >
-            <div class="item-checkbox" v-show="multiSelectMode">
-              <el-checkbox v-model="item.checked"></el-checkbox>
+      <el-divider></el-divider>
+      <div class="bottom-container">
+        <div class="el-row gutter-1">
+          <div class="item-container el-col-xs-8 el-col-sm-6 el-col-md-4 el-col-lg-4"
+               v-for="(item,index) in collection.dataList" :key="item.branch.branchId">
+            <div class="cover">
+              <img @click="goDetail(item.branch.branchId,index)"
+                   :src="item.branch.imgUrl"
+                   :alt="item.branch.translatedName"
+              >
+              <div class="item-checkbox" v-show="multiSelectMode">
+                <el-checkbox v-model="item.checked"></el-checkbox>
+              </div>
             </div>
-          </div>
-          <div class="title">
-            <el-link @click.native.prevent="goDetail(item.branch.branchId,index)"
-                     :underline="false"
-            >
-              {{item.branch.translatedName}}
-            </el-link>
-          </div>
-          <div class="collect-time">
-            <div>
-              <span>收藏于:&nbsp;{{item.collectTime | dateFormatter}}</span>
+            <div class="title">
+              <el-link @click.native.prevent="goDetail(item.branch.branchId,index)"
+                       :underline="false"
+              >
+                {{item.branch.translatedName}}
+              </el-link>
             </div>
-            <div>
-              <el-dropdown hide-on-click trigger="click">
+            <div class="collect-time">
+              <div>
+                <span>收藏于:&nbsp;{{item.collectTime | dateFormatter}}</span>
+              </div>
+              <div>
+                <el-dropdown hide-on-click trigger="click">
                 <span style="cursor: pointer;font-size: 0.75rem">
                   <i class="el-icon-more"></i>
                 </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item @click.native="deleteSingle(item.branch.branchId)">删除</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item @click.native="deleteSingle(item.branch.branchId)">删除</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
             </div>
           </div>
-        </el-col>
-      </el-row>
-      <Pagination :pageSize="12" :total="collection.total" :reqPage="load"/>
-    </div>
+        </div>
+        <Pagination :pageSize="12" :total="collection.total" :reqPage="load"/>
+      </div>
+    </template>
+    <el-empty v-else description="暂无收藏" :image-size="200"></el-empty>
   </div>
 </template>
 
 <script>
 
-import {reqCollectionByUsername,reqDeleteCollection,reqDeleteBulkCollection} from "@/api";
+import {reqDeleteCollection,
+        reqDeleteBulkCollection,
+        reqCollectionByUsernameAndKeyword} from "@/api";
 
 import Pagination from "@/components/Pagination";
 
@@ -81,6 +87,7 @@ export default {
       collection: {
         dataList: []
       },
+      keyword: "",
       multiSelectMode: false,
       selectAll: false,
       deleteDisabled: true
@@ -88,7 +95,7 @@ export default {
   },
   methods: {
     async load(pageNum){
-      let result = await reqCollectionByUsername(pageNum);
+      let result = await reqCollectionByUsernameAndKeyword(this.keyword,pageNum);
       if(result.code === 200){
         this.collection = result.data;
         this.collection.dataList.forEach( (element,index,array) => {
@@ -187,10 +194,6 @@ export default {
 .collection-container{
   padding: 0 1rem;
   > .top-container{
-     .operation{
-      text-align: right;
-      line-height: 28px;
-    }
     > .multi-mode-container{
       > .multi-mode-bottom{
         > * {

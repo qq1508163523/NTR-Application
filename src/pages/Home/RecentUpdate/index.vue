@@ -6,19 +6,25 @@
       </span>
       <span>最近更新</span>
     </div>
-    <ItemDisplay :itemList="$store.state.home.recentUpdateList" :limitSize="12" :colSize="6" :gutter="12"/>
+    <div class="el-row gutter-2">
+      <div class="el-col-xs-8 el-col-sm-6 el-col-md-4 el-col-lg-4"
+           v-for="branch in $store.state.home.recentUpdateList" :key="branch.branchId"
+      >
+        <BranchItem :branch="branch"></BranchItem>
+      </div>
+    </div>
   </div>
 
 </template>
 
 <script>
 
-import ItemDisplay from "@/components/ItemDisplay";
+import BranchItem from "@/components/BranchItem";
 
 export default {
   name: "RecentUpdate",
   components: {
-    ItemDisplay
+    BranchItem
   },
   mounted() {
     this.$store.dispatch('home/getRecentUpdate');

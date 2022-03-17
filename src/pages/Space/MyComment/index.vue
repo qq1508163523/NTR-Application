@@ -5,7 +5,11 @@
         <el-link type="primary" :href="`/#/detail/${item.branch.branchId}`"
                  :underline="false">{{item.branch.translatedName}}</el-link>
       </div>
-      <CommentItem :comment="item" :key="item.commentId"/>
+<!--      <CommentItem :comment="item" :key="item.commentId"/>-->
+      <div style="margin-top: 0.75rem">
+        <p>{{item.content}}</p>
+        <p style="color: #a9a1a1;font-size: 0.75rem;margin-top: 0.5rem">{{item.postTime | dateFormatter('yyyy-mm-dd HH:MM:ss')}}</p>
+      </div>
       <el-divider></el-divider>
     </div>
     <Pagination :pageSize="10" :total="comment.total" :reqPage="load"/>

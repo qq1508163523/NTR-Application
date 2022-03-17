@@ -67,7 +67,7 @@ const actions = {
     async updateProfileImage({commit},formData){
         let result = await reqUpdateProfileImage(formData);
         if(result.code === 200){
-            commit('UPDATE_PROFILE_IMAGE');
+            commit('UPDATE_PROFILE_IMAGE',result.data.profilePicUrl);
             return result.message;
         }else{
             return Promise.reject(new Error(result.message));

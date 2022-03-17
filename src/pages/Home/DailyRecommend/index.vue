@@ -6,18 +6,24 @@
       </span>
       <span>今日推荐</span>
     </div>
-    <ItemDisplay :itemList="$store.state.home.dailyRecommendList" :limitSize="12" :colSize="6" :gutter="12"/>
+    <div class="el-row gutter-2">
+      <div class="el-col-xs-8 el-col-sm-6 el-col-md-4 el-col-lg-4"
+           v-for="branch in $store.state.home.dailyRecommendList"
+           :key="branch.branchId">
+        <BranchItem :branch="branch"></BranchItem>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 
-import ItemDisplay from "@/components/ItemDisplay";
+import BranchItem from "@/components/BranchItem";
 
 export default {
   name: "DailyRecommend",
   components: {
-    ItemDisplay
+    BranchItem
   },
   mounted() {
     this.$store.dispatch('home/getDailyRecommendList');

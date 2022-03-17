@@ -91,8 +91,8 @@ export default {
   padding: 1.25rem 0;
   > .user-icon{
     img{
-      height: 48px;
-      width: 48px;
+      height: 3rem;
+      width: 3rem;
       border-radius: 50%;
       border: 1px solid #c7bfbf
     }

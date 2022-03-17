@@ -50,7 +50,9 @@ export const reqUpdateNickname = (nickname) => requests({url:`/account/nickname/
 
 export const reqModifyPassword = (formData) => requests({url:`/account/password`,data: formData,method: "PUT"});
 
-export const reqCollectionByUsername = (pageNum) => requests({url:`/collection`,params: {pageNum},method: "GET"});
+// export const reqCollectionByUsername = (pageNum) => requests({url:`/collection`,params: {pageNum},method: "GET"});
+
+export const reqCollectionByUsernameAndKeyword = (keyword,pageNum) => requests({url:`/collection`,params: {keyword,pageNum},method: "GET"})
 
 export const reqDeleteBulkCollection = (formData) => requests({url:`/collection/bulk`,data: formData,method: "DELETE"});
 

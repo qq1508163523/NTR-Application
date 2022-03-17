@@ -43,11 +43,13 @@ import {
   DropdownMenu,
   DropdownItem,
   Link,
-  Checkbox
+  Checkbox,
+  Drawer
 }
 from "element-ui";
 //element-ui style
 import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/display.css'
 
 import VueRouter from "vue-router";
 
@@ -86,10 +88,15 @@ Vue.component(DropdownMenu.name,DropdownMenu);
 Vue.component(DropdownItem.name,DropdownItem);
 Vue.component(Link.name,Link);
 Vue.component(Checkbox.name,Checkbox);
-
-
+Vue.component(Drawer.name,Drawer);
 
 Vue.use(VueRouter);
+
+import VueLazyload from "vue-lazyload";
+import lazy from "@/assets/img/lazy.png"
+Vue.use(VueLazyload,{
+  loading: lazy
+});
 
 new Vue({
   render: h => h(App),

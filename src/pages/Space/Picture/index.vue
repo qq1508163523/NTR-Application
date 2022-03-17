@@ -99,6 +99,7 @@ export default {
       try{
         await this.$store.dispatch("account/updateProfileImage",formData);
         this.$message.success("上传成功");
+        window.location.reload();
       }catch(err){
         this.$message.error(err.message);
       }
@@ -127,10 +128,10 @@ export default {
       margin-right: 1.25rem;
       float: right;
       >div:first-of-type{
-        height: 196px;
-        width: 196px;
+        height: 12.25rem;
+        width: 12.25rem;
         .img-select-block{
-          height: 196px;
+          height: 12.25rem;
           background-color: #d0c4c4;
           border: 1px dashed #b9b9c4;
           cursor: pointer;
@@ -149,8 +150,8 @@ export default {
     }
 
     .preview-container{
-      width: 196px;
-      height: 196px;
+      width: 12.25rem;
+      height: 12.25rem;
       display: flex;
       margin-left: 1.25rem;
       padding-left: 0.75rem;
@@ -159,8 +160,8 @@ export default {
       align-items: center;
       border-left: 1px solid #cec4c4;
       > img{
-        width: 128px;
-        height: 128px;
+        width: 8rem;
+        height: 8rem;
         vertical-align: middle;
         border-radius: 50%;
         border: 1px solid #e8e2e2;

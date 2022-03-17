@@ -1,5 +1,5 @@
 <template>
-  <div class="month-rank-container">
+  <div class="month-rank-container hidden-md-and-down">
     <div class="icon-title">
       <span>
         <i class="el-icon-trophy" style="font-size: 2.25rem;color: gold"></i>

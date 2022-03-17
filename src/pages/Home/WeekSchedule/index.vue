@@ -14,9 +14,16 @@
           :key="week.nameEn"
       >
         <div class="week-item">
-          <ItemDisplay v-if="week.branchList.length > 0" :itemList="week.branchList" :colSize="6" :limitSize="18" :gutter="6"/>
+          <div class="el-row gutter-1"
+               v-if="week.branchList.length > 0"
+          >
+            <div class="el-col-xs-8 el-col-sm-6 el-col-md-4 el-col-lg-4"
+                 v-for="branch in week.branchList" :key="branch.branchId">
+              <BranchItem :branch="branch" :key="branch.branchId"></BranchItem>
+            </div>
+          </div>
           <div v-else style="text-align: center">
-              <h2 style="color: #9d7c7c;">空空如也</h2>
+            <h2 style="color: #9d7c7c;">空空如也</h2>
           </div>
         </div>
       </el-tab-pane>
@@ -26,12 +33,12 @@
 
 <script>
 
-import ItemDisplay from "@/components/ItemDisplay";
+import BranchItem from "@/components/BranchItem";
 
 export default {
   name: "WeekSchedule",
   components:{
-    ItemDisplay
+    BranchItem
   },
   data(){
     return {
@@ -57,13 +64,5 @@ export default {
     }
   }
 }
-
-.week-item{
-  max-height: 460px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-
 
 </style>

@@ -87,12 +87,12 @@ export default {
 .login-container{
   background-color: white;
   padding: 1rem;
-  width: 400px;
+  width: 25rem;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   box-shadow: 2px 2px 2px #c9c6c6;
   > .icon-title{
     text-align: center;

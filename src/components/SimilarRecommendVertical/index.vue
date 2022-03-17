@@ -3,7 +3,7 @@
     <div class="icon-title">
       <span style="font-size: 1.25rem">相关推荐</span>
     </div>
-    <div class="el-row item-container" v-for="branch in similarRecommendList.slice(0,limitSize)" :key="branch.branchId">
+    <div class="el-row item-container" v-for="branch in similarRecommendList" :key="branch.branchId">
       <div class="el-col-10 cover-container">
         <img @click="goDetail(branch.branchId)" :src="branch.imgUrl" :alt="branch.branchId">
       </div>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "SimilarRecommend",
+  name: "SimilarRecommendVertical",
   props: ["similarRecommendList","limitSize"],
   methods: {
     goDetail(branchId) {
@@ -61,7 +61,7 @@ export default {
         cursor: pointer;
         max-width: 100%;
         height: auto;
-        border-radius: 5px;
+        border-radius: 0.3125rem;
       }
     }
     > .info-container{

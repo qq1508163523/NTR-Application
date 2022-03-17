@@ -11,11 +11,12 @@
     <div class="comment-edit-container">
       <CommentBoard :branchId="branchId" :rows="4" :replyTo="null" :parent="-1" :postSuccess="postSuccess" />
     </div>
-<!--    <Pagination :pageSize="10" :total="commentRoot.total" :reqPage="loadComment"/>-->
-    <div class="comment-item-container">
-      <CommentItem v-for="item in commentRoot.dataList" :comment="item" :key="item.commentId"/>
-    </div>
-    <Pagination :pageSize="10" :total="commentRoot.total" :reqPage="loadComment"/>
+    <template v-if="commentRoot.dataList.length">
+      <div class="comment-item-container">
+        <CommentItem v-for="item in commentRoot.dataList" :comment="item" :key="item.commentId"/>
+      </div>
+      <Pagination :pageSize="10" :total="commentRoot.total" :reqPage="loadComment"/>
+    </template>
   </div>
 </template>
 

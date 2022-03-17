@@ -1,10 +1,10 @@
 <template>
   <div class="home-container">
     <Carousel/>
-    <div class="content-container">
+    <div class="content-container container">
       <DailyRecommend/>
-      <el-row :gutter="12">
-        <el-col :span="18">
+      <el-row :gutter="12" type="flex">
+        <el-col :xs="24" :sm="24" :md="24" :lg="18">
           <WeekSchedule/>
         </el-col>
         <el-col :span="6">
@@ -42,8 +42,6 @@ export default {
 .home-container{
   margin: 1.5rem auto 0 auto;
    > .content-container {
-    width: 1140px;
-    min-width: 1140px;
     margin: 0 auto;
      .el-row{
        margin-top: 2.5rem;

@@ -250,7 +250,7 @@ export default {
 .register-container{
   background-color: white;
   padding: 1rem;
-  width: 400px;
+  width: 25rem;
   position: absolute;
   left: 50%;
   top: 50%;
